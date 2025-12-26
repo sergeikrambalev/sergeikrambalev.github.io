@@ -1,0 +1,22 @@
+title: Gardrick
+description: Portfolio
+theme: minima
+header_pages:
+  - about.md
+  - projects.md
+
+include:
+  - music
+  - music/**/*
+  - music/**/*.*
+
+exclude:
+  - README.md
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - generate-music-list.js
+
+keep_files:
+  - music
+  - music/**

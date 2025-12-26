@@ -1,0 +1,601 @@
+---
+layout: page
+title: "Track of the week"
+permalink: /music/
+---
+
+<div id="mp3-player">
+  <div id="visualizer-section">
+    <canvas id="audio-visualizer"></canvas>
+  </div>
+  
+  <div id="track-info">
+    <div id="artist-display">Загрузка...</div>
+    <div id="title-display">Пожалуйста, подождите</div>
+  </div>
+  
+  <div id="progress-section">
+    <input type="range" id="progress-slider" min="0" max="100" value="0">
+  </div>
+  
+  <div id="control-section">
+    <button id="play-pause" title="Воспроизвести" disabled>▶</button>
+    <div id="volume-container">
+      <input type="range" id="volume-slider" min="0" max="100" value="80">
+    </div>
+  </div>
+  
+  <audio id="audio-player" preload="none"></audio>
+</div>
+
+<style>
+
+#mp3-player {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%);
+  color: #e0e0e0;
+  max-width: 600px;
+  margin: 40px auto;
+  padding: 30px;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 25px;
+}
+
+#visualizer-section {
+  width: 320px;
+  height: 320px;
+  margin: 0 auto 20px;
+}
+
+#audio-visualizer {
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle, #1a2b3a 0%, #0a141f 70%);
+  border-radius: 50%;
+  border: 3px solid #3a506b;
+  box-shadow: 
+    inset 0 0 20px rgba(0, 40, 60, 0.8),
+    0 0 30px rgba(0, 150, 200, 0.3);
+}
+
+#track-info {
+  width: 100%;
+  text-align: center;
+  padding: 15px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  min-height: 80px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+#artist-display {
+  font-size: 16px;
+  font-weight: 600;
+  color: #6ab0de;
+  margin-bottom: 5px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+#title-display {
+  font-size: 20px;
+  font-weight: 700;
+  color: #ffffff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+#progress-section {
+  width: 100%;
+  padding: 0 10px;
+}
+
+#progress-slider {
+  width: 100%;
+  height: 6px;
+  -webkit-appearance: none;
+  background: linear-gradient(90deg, #4cc9f0 0%, #4361ee 50%, #3a0ca3 100%);
+  border-radius: 3px;
+  outline: none;
+  border: none;
+}
+
+#progress-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 20px;
+  height: 20px;
+  background: #ffffff;
+  border: 2px solid #4cc9f0;
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 0 0 10px rgba(76, 201, 240, 0.7);
+}
+
+#progress-slider::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  background: #ffffff;
+  border: 2px solid #4cc9f0;
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 0 0 10px rgba(76, 201, 240, 0.7);
+}
+
+#control-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 0 10px;
+}
+
+#play-pause {
+  width: 60px;
+  height: 60px;
+  background: linear-gradient(145deg, #4361ee, #3a0ca3);
+  border: none;
+  border-radius: 50%;
+  color: white;
+  font-size: 24px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  box-shadow: 0 5px 15px rgba(58, 12, 163, 0.4);
+}
+
+#play-pause:hover:not(:disabled) {
+  transform: scale(1.05);
+  box-shadow: 0 7px 20px rgba(58, 12, 163, 0.6);
+}
+
+#play-pause:active:not(:disabled) {
+  transform: scale(0.98);
+}
+
+#play-pause:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+#volume-container {
+  flex: 1;
+  max-width: 150px;
+  margin-left: 30px;
+}
+
+#volume-slider {
+  width: 100%;
+  height: 6px;
+  -webkit-appearance: none;
+  background: linear-gradient(90deg, #4cc9f0 0%, #4361ee 100%);
+  border-radius: 3px;
+  outline: none;
+  border: none;
+}
+
+#volume-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 18px;
+  height: 18px;
+  background: #ffffff;
+  border: 2px solid #4cc9f0;
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 0 0 8px rgba(76, 201, 240, 0.7);
+}
+
+#volume-slider::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  background: #ffffff;
+  border: 2px solid #4cc9f0;
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 0 0 8px rgba(76, 201, 240, 0.7);
+}
+
+#play-pause.paused {
+  background: linear-gradient(145deg, #4cc9f0, #4361ee);
+}
+
+.status-loading {
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0% { opacity: 0.6; }
+  50% { opacity: 1; }
+  100% { opacity: 0.6; }
+}
+</style>
+
+<script>
+class ConfigMP3Player {
+  constructor() {
+    this.audio = document.getElementById('audio-player');
+    this.playPauseBtn = document.getElementById('play-pause');
+    this.volumeSlider = document.getElementById('volume-slider');
+    this.progressSlider = document.getElementById('progress-slider');
+    this.artistDisplay = document.getElementById('artist-display');
+    this.titleDisplay = document.getElementById('title-display');
+    
+    this.canvas = document.getElementById('audio-visualizer');
+    this.ctx = this.canvas.getContext('2d');
+    this.canvas.width = 320;
+    this.canvas.height = 320;
+    
+    this.audioContext = null;
+    this.analyser = null;
+    this.source = null;
+    this.dataArray = null;
+    
+    this.trackConfig = null;
+    this.isPlaying = false;
+    this.isLoaded = false;
+    
+    this.init();
+  }
+  
+  async init() {
+    this.setupEventListeners();
+    this.setupAudioContext();
+    
+    await this.loadTrackConfig();
+    
+    if (this.trackConfig) {
+      this.startTrackLoading();
+    }
+    
+    this.drawVisualizer();
+  }
+  
+  async loadTrackConfig() {
+    try {
+      const response = await fetch('./track-config.json');
+      
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      
+      this.trackConfig = await response.json();
+      
+      if (!this.trackConfig.file) {
+        throw new Error('В конфиге не указан файл трека (field "file")');
+      }
+      
+      this.trackConfig.artist = this.trackConfig.artist || 'Исполнитель';
+      this.trackConfig.title = this.trackConfig.title || 'Название трека';
+      
+      console.log('Конфиг загружен:', this.trackConfig);
+      
+      this.artistDisplay.textContent = this.trackConfig.artist;
+      this.titleDisplay.textContent = this.trackConfig.title;
+      
+    } catch (error) {
+      console.error('Ошибка загрузки конфига:', error);
+      
+      this.trackConfig = {
+        file: 'track.mp3',
+        artist: 'Неизвестный исполнитель',
+        title: 'Трек дня'
+      };
+      
+      this.artistDisplay.textContent = this.trackConfig.artist;
+      this.titleDisplay.textContent = this.trackConfig.title;
+    }
+  }
+  
+  startTrackLoading() {
+    if (!this.trackConfig || !this.trackConfig.file) {
+      console.error('Нет данных о треке для загрузки');
+      return;
+    }
+    
+    let audioPath = this.trackConfig.file;
+    
+    if (audioPath.startsWith('./')) {
+      audioPath = audioPath.substring(2);
+    }
+    
+    if (!audioPath.startsWith('/') && !audioPath.startsWith('http')) {
+      audioPath = `./${audioPath}`;
+    }
+    
+    console.log('Устанавливаю путь к треку:', audioPath);
+    
+    this.audio.src = audioPath;
+    
+    this.playPauseBtn.disabled = false;
+    
+    this.titleDisplay.textContent = `${this.trackConfig.title} (готово)`;
+    
+    this.isLoaded = true;
+    
+    this.audio.addEventListener('loadedmetadata', () => {
+      if (this.audio.duration) {
+        const duration = this.formatTime(this.audio.duration);
+        this.artistDisplay.textContent = `${this.trackConfig.artist} • ${duration}`;
+      }
+    });
+    
+    this.audio.addEventListener('error', (e) => {
+      console.error('Ошибка аудио:', e);
+      
+      if (this.audio.error && this.audio.error.code !== 0) {
+        this.titleDisplay.textContent = 'Ошибка воспроизведения';
+        this.titleDisplay.classList.add('status-loading');
+      }
+    });
+  }
+  
+  setupAudioContext() {
+    try {
+      if (window.AudioContext || window.webkitAudioContext) {
+        this.audioContext = new (window.AudioContext || window.webkitAudioContext)();
+      }
+    } catch (error) {
+      console.warn('AudioContext не поддерживается:', error);
+    }
+  }
+  
+  setupEventListeners() {
+    this.playPauseBtn.addEventListener('click', () => this.togglePlay());
+    this.volumeSlider.addEventListener('input', (e) => {
+      this.audio.volume = e.target.value / 100;
+    });
+    
+    this.progressSlider.addEventListener('input', (e) => {
+      if (this.audio.duration) {
+        this.audio.currentTime = (e.target.value / 100) * this.audio.duration;
+      }
+    });
+    
+    this.audio.addEventListener('timeupdate', () => this.updateProgress());
+    this.audio.addEventListener('loadedmetadata', () => this.updateTrackInfo());
+    this.audio.addEventListener('ended', () => this.onTrackEnd());
+  }
+  
+  initVisualizer() {
+    if (!this.audioContext || !this.audio.src) return;
+    
+    this.analyser = this.audioContext.createAnalyser();
+    this.source = this.audioContext.createMediaElementSource(this.audio);
+    
+    this.source.connect(this.analyser);
+    this.analyser.connect(this.audioContext.destination);
+    
+    this.analyser.fftSize = 512;
+    const bufferLength = this.analyser.frequencyBinCount;
+    this.dataArray = new Uint8Array(bufferLength);
+  }
+  
+  togglePlay() {
+    if (!this.audio.src) return;
+    
+    if (this.isPlaying) {
+      this.pause();
+    } else {
+      this.play();
+    }
+  }
+  
+  async play() {
+    if (!this.audio.src) return;
+    
+    try {
+      if (this.audioContext) {
+        if (this.audioContext.state === 'suspended') {
+          await this.audioContext.resume();
+        }
+        
+        if (!this.analyser) {
+          this.initVisualizer();
+        }
+      }
+      
+      await this.audio.play();
+      this.isPlaying = true;
+      this.playPauseBtn.textContent = '⏸';
+      this.playPauseBtn.classList.add('paused');
+      
+      this.titleDisplay.textContent = this.trackConfig.title;
+      this.titleDisplay.classList.remove('status-loading');
+      
+    } catch (error) {
+      console.error('Ошибка воспроизведения:', error);
+      
+      if (error.name === 'NotSupportedError' || error.name === 'NotAllowedError') {
+        this.titleDisplay.textContent = 'Ошибка: браузер не поддерживает воспроизведение';
+        this.titleDisplay.classList.add('status-loading');
+      }
+    }
+  }
+  
+  pause() {
+    this.audio.pause();
+    this.isPlaying = false;
+    this.playPauseBtn.textContent = '▶';
+    this.playPauseBtn.classList.remove('paused');
+  }
+  
+  updateProgress() {
+    if (this.audio.duration) {
+      const progress = (this.audio.currentTime / this.audio.duration) * 100;
+      this.progressSlider.value = progress;
+      
+      const currentTime = this.formatTime(this.audio.currentTime);
+      const totalTime = this.formatTime(this.audio.duration);
+      this.artistDisplay.textContent = `${this.trackConfig.artist} • ${currentTime} / ${totalTime}`;
+    }
+  }
+  
+  updateTrackInfo() {
+    if (this.trackConfig && this.audio.duration) {
+      const duration = this.formatTime(this.audio.duration);
+      this.artistDisplay.textContent = `${this.trackConfig.artist} • ${duration}`;
+    }
+  }
+  
+  formatTime(seconds) {
+    if (!seconds || isNaN(seconds)) return '0:00';
+    const mins = Math.floor(seconds / 60);
+    const secs = Math.floor(seconds % 60);
+    return `${mins}:${secs.toString().padStart(2, '0')}`;
+  }
+  
+  onTrackEnd() {
+    this.pause();
+    this.audio.currentTime = 0;
+    this.progressSlider.value = 0;
+  }
+  
+  drawVisualizer() {
+    const width = this.canvas.width;
+    const height = this.canvas.height;
+    const centerX = width / 2;
+    const centerY = height / 2;
+    const radius = 140;
+    
+    this.ctx.clearRect(0, 0, width, height);
+    
+    const gradient = this.ctx.createRadialGradient(
+      centerX, centerY, 50,
+      centerX, centerY, radius + 10
+    );
+    gradient.addColorStop(0, 'rgba(76, 201, 240, 0.1)');
+    gradient.addColorStop(1, 'rgba(26, 43, 58, 0.3)');
+    
+    this.ctx.beginPath();
+    this.ctx.arc(centerX, centerY, radius + 10, 0, Math.PI * 2);
+    this.ctx.fillStyle = gradient;
+    this.ctx.fill();
+    
+    if (this.analyser && this.dataArray && this.isPlaying) {
+      this.analyser.getByteFrequencyData(this.dataArray);
+      
+      const bars = 180;
+      const halfBars = bars / 2;
+      const innerRadius = 60;
+      const maxBarLength = radius - innerRadius;
+      
+      for (let i = 0; i < halfBars; i++) {
+        const dataIndex = Math.floor((halfBars - i - 1) * this.dataArray.length / halfBars);
+        const value = this.dataArray[dataIndex];
+        const normalizedValue = value / 255;
+        
+        const angle = Math.PI/2 + (i / halfBars) * Math.PI;
+        const barLength = innerRadius + maxBarLength * normalizedValue;
+        
+        const startX = centerX + Math.cos(angle) * innerRadius;
+        const startY = centerY + Math.sin(angle) * innerRadius;
+        const endX = centerX + Math.cos(angle) * barLength;
+        const endY = centerY + Math.sin(angle) * barLength;
+        
+        const intensity = normalizedValue * 100;
+        let color;
+        if (intensity < 30) color = '#4cc9f0';
+        else if (intensity < 60) color = '#4361ee';
+        else if (intensity < 80) color = '#7209b7';
+        else color = '#f72585';
+        
+        this.ctx.beginPath();
+        this.ctx.lineWidth = 3;
+        this.ctx.lineCap = 'round';
+        this.ctx.strokeStyle = color;
+        this.ctx.moveTo(startX, startY);
+        this.ctx.lineTo(endX, endY);
+        this.ctx.stroke();
+      }
+      
+      for (let i = 0; i < halfBars; i++) {
+        const dataIndex = Math.floor(i * this.dataArray.length / halfBars);
+        const value = this.dataArray[dataIndex];
+        const normalizedValue = value / 255;
+        
+        const angle = Math.PI/2 - (i / halfBars) * Math.PI;
+        const barLength = innerRadius + maxBarLength * normalizedValue;
+        
+        const startX = centerX + Math.cos(angle) * innerRadius;
+        const startY = centerY + Math.sin(angle) * innerRadius;
+        const endX = centerX + Math.cos(angle) * barLength;
+        const endY = centerY + Math.sin(angle) * barLength;
+        
+        const intensity = normalizedValue * 100;
+        let color;
+        if (intensity < 30) color = '#4cc9f0';
+        else if (intensity < 60) color = '#4361ee';
+        else if (intensity < 80) color = '#7209b7';
+        else color = '#f72585';
+        
+        this.ctx.beginPath();
+        this.ctx.lineWidth = 3;
+        this.ctx.lineCap = 'round';
+        this.ctx.strokeStyle = color;
+        this.ctx.moveTo(startX, startY);
+        this.ctx.lineTo(endX, endY);
+        this.ctx.stroke();
+      }
+      
+      this.ctx.beginPath();
+      this.ctx.arc(centerX, centerY, innerRadius - 5, 0, Math.PI * 2);
+      const centerGradient = this.ctx.createRadialGradient(
+        centerX, centerY, 0,
+        centerX, centerY, innerRadius - 5
+      );
+      centerGradient.addColorStop(0, 'rgba(76, 201, 240, 0.4)');
+      centerGradient.addColorStop(1, 'rgba(67, 97, 238, 0.1)');
+      this.ctx.fillStyle = centerGradient;
+      this.ctx.fill();
+      
+      this.ctx.beginPath();
+      this.ctx.strokeStyle = 'rgba(255, 255, 255, 0.2)';
+      this.ctx.lineWidth = 1;
+      this.ctx.moveTo(centerX, centerY - radius);
+      this.ctx.lineTo(centerX, centerY + radius);
+      this.ctx.stroke();
+    } else {
+      this.ctx.beginPath();
+      this.ctx.arc(centerX, centerY, 80, 0, Math.PI * 2);
+      this.ctx.fillStyle = 'rgba(67, 97, 238, 0.1)';
+      this.ctx.fill();
+      
+      if (!this.trackConfig) {
+        this.ctx.font = '14px Consolas';
+        this.ctx.fillStyle = '#4cc9f0';
+        this.ctx.textAlign = 'center';
+        this.ctx.textBaseline = 'middle';
+        this.ctx.fillText('ЗАГРУЗКА...', centerX, centerY);
+      } else if (this.isLoaded) {
+        this.ctx.font = '14px Consolas';
+        this.ctx.fillStyle = '#4cc9f0';
+        this.ctx.textAlign = 'center';
+        this.ctx.textBaseline = 'middle';
+        this.ctx.fillText('ГОТОВО', centerX, centerY);
+      } else {
+        this.ctx.font = '14px Consolas';
+        this.ctx.fillStyle = '#4cc9f0';
+        this.ctx.textAlign = 'center';
+        this.ctx.textBaseline = 'middle';
+        this.ctx.fillText('ОЖИДАНИЕ', centerX, centerY);
+      }
+    }
+    
+    requestAnimationFrame(() => this.drawVisualizer());
+  }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  window.player = new ConfigMP3Player();
+});
+</script>
