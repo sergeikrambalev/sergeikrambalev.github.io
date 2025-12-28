@@ -9,6 +9,7 @@ include:
   - music
   - music/**/*
   - music/**/*.*
+  - _labs
 
 exclude:
   - README.md
