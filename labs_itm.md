@@ -7,15 +7,15 @@ permalink: /labs/itm/
 # Тема 1. Информационные технологии в математике
 Информационные технологии при обработке результатов исследования в области математики. Информационные технологии в математике. Информационные технологии поиска информации по математике. Электронные библиотеки.
 
-[Задание 0](https://github.com/sergeikrambalev/sergeikrambalev.github.io/blob/main/_labs/IT_M/lab_1/%D0%9A%D1%80%D0%B0%D0%BC%D0%B1%D0%B0%D0%BB%D0%B5%D0%B2%D0%A1%D0%94%20%D0%B3%D1%80.1%20%D0%BF%D0%BE%D0%B4%D0%B3%D1%80.1%20%D0%9B%D0%A0-1%20%D0%B7%D0%B0%D0%B4%D0%B0%D0%BD%D0%B8%D0%B5-0.docx)
+[Задание 0]({{ "/_labs/IT_M/lab_1/КрамбалевСД гр.1 подгр.1 ЛР-1 задание-0.docx" | relative_url }})
 
-[Задание 1](https://github.com/sergeikrambalev/sergeikrambalev.github.io/blob/main/_labs/IT_M/lab_1/%D0%9A%D1%80%D0%B0%D0%BC%D0%B1%D0%B0%D0%BB%D0%B5%D0%B2%20%D0%A1%D0%94%20%D1%81%D1%81%D1%8B%D0%BB%D0%BA%D0%B0%20%D0%BD%D0%B0%20%D1%81%D0%B0%D0%B9%D1%82.docx)
+[Задание 1]({{ "/_labs/IT_M/lab_1/Крамбалев СД ссылка на сайт.docx" | relative_url }})
 
-[Задание 2](https://github.com/sergeikrambalev/sergeikrambalev.github.io/blob/main/_labs/IT_M/lab_1/%D0%9A%D1%80%D0%B0%D0%BC%D0%B1%D0%B0%D0%BB%D0%B5%D0%B2%20%D0%A1%D0%94%20%D0%B3%D1%80.1%20%D0%BF%D0%BE%D0%B4%D0%B3%D1%80.1%20%D0%9B%D0%A0-1%20%D1%82%D0%B5%D0%BC%D0%B0%201.docx)
+[Задание 2]({{ "/_labs/IT_M/lab_1/Крамбалев СД гр.1 подгр.1 ЛР-1 тема 1.docx" | relative_url }})
 
-[ИСР](https://github.com/sergeikrambalev/sergeikrambalev.github.io/blob/main/_labs/IT_M/lab_1/%D0%9A%D1%80%D0%B0%D0%BC%D0%B1%D0%B0%D0%BB%D0%B5%D0%B2%20%D0%A1%D0%94%20%D0%B3%D1%80.1%20%D0%BF%D0%BE%D0%B4%D0%B3%D1%80.1%20%D0%9B%D0%A0-1%20%D1%82%D0%B5%D0%BC%D0%B0%201%20%D0%98%D0%A1%D0%A0%20%D0%B7%D0%B0%D0%B4%D0%B0%D0%BD%D0%B8%D0%B5%201.1.docx)
+[ИСР]({{ "/_labs/IT_M/lab_1/Крамбалев СД гр.1 подгр.1 ЛР-1 тема 1 ИСР задание 1.1.docx" | relative_url }})
 
-[ВСР](https://github.com/sergeikrambalev/sergeikrambalev.github.io/blob/main/_labs/IT_M/lab_1/%D0%9A%D1%80%D0%B0%D0%BC%D0%B1%D0%B0%D0%BB%D0%B5%D0%B2%20%D0%A1%D0%94%20%D0%B3%D1%80.1%20%D0%BF%D0%BE%D0%B4%D0%B3%D1%80.1%20%D0%9B%D0%A0-1%20%D1%82%D0%B5%D0%BC%D0%B0%201%20%D0%92%D0%A1%D0%A0%20%D0%B7%D0%B0%D0%B4%D0%B0%D0%BD%D0%B8%D0%B5%201.2.docx)
+[ВСР]({{ "/_labs/IT_M/lab_1/Крамбалев СД гр.1 подгр.1 ЛР-1 тема 1 ВСР задание 1.2.docx" | relative_url }})
 
 ---
 
